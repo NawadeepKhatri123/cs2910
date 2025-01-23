@@ -15,17 +15,20 @@ class Students:
             elif self.ph == student.ph:
                 print(student)
 
-    def print_list(self,courses,a,b):
+    def print_list(self,students,a,b):
         if a != True and b != True:
-            for i in courses:
+            for i in students:
+                print()
                 print(i)
         elif a == True:
-            courses.sort(key = lambda course : course.last_name)
-            for i in courses:
+            students.sort(key = lambda student : student.first_name)
+            for i in students:
+                print()
                 print(i)
         else:
-            courses.sort(key = lambda course : course.last_name, reverse = True)
-            for i in courses:
+            students.sort(key = lambda student : student.first_name, reverse = True)
+            for i in students:
+                print()
                 print(i)
     def __str__(self):
         return f"{self.id},{self.last_name}, {self.first_name}, {self.ph},{self.email}"
@@ -43,8 +46,10 @@ class Courses:
     def search(self, courses ):
         for course in courses:
             if self.course_name == course.course_name:
+                print()
                 print(course)
             elif self.course_id == course.course_id:
+                print()
                 print(course)
 
     def print_list(self,courses,a,b):
@@ -228,7 +233,7 @@ def main():
                     Stu_order.print_list(courses,False,True)
                 elif enter.lower() == 'e':
                     pass
-                break
+                continue
             elif enter.lower() == 's':
                 print()
                 enter = input ("Search : (N)Name (C)Code (S)Semester (E) Exit to Main Menu : ")
@@ -239,7 +244,7 @@ def main():
                     enter = enter.upper()
                     S_name = Courses(enter, None, None)
                     S_name.search(courses)
-                elif enter.lower() == 'p':
+                elif enter.lower() == 'c':
                     # search for course code
                     print()
                     enter = input("Enter course code : ")
@@ -322,6 +327,41 @@ def main():
                     new_list.clear()
 
             elif enter.lower() == 'ca':
+                list_ca=[]
+                avg = 0
+
+                semester1 = ['winter','fall','spring']
+                print()
+                enter = input("Enter student's last Name : ")
+                enter_1 = input("Enter course term : ")
+
+                for grade in grades:
+                    if grade.last_name.lower() == enter.lower():
+                        list_ca.append(grade)
+
+
+                count = 0
+                for i in list_ca:
+                    count = 0
+                    avg = 0
+                    if enter_1 == 'winter':
+                        if i.c1 != 'na':
+                            avg = avg + i.c1
+                            count += 1
+                        if i.c4 != 'na':
+                            avg = avg + i.c4
+                            count += 1
+                    elif enter_1 == 'fall':
+                        if i.c2 != 'na':
+                            avg = avg + i.c2
+                            count += 1
+                        if i.c3 != 'na':
+                            avg = avg + i.c4
+                            count +=1
+                    if count != 0:
+                        print()
+                        print(f"{i.first_name},{i.last_name} {enter_1} average = {avg / count}")
+
                 pass
             elif enter.lower() == 'ac':
                 print()
@@ -365,14 +405,6 @@ def main():
             print()
             print("Invalid input")
             continue
-
-
-
-
-
-
-
-
 
 if __name__ == "__main__":
     main()
