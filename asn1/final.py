@@ -79,11 +79,11 @@ def update_Sinfo(students):
     with open('students.csv',mode = 'w', newline='')as file:
         writer = csv.writer(file, delimiter = ';')
         for student in students:
-            writer.writerow([student.id, student.first_name, student.last_name, student.ph, student.email])
+            writer.writerow([student.id, student.last_name, student.first_name, student.ph, student.email])
 def add_student_info(student):
     with open('students.csv', mode='a', newline='') as file:  # Use 'a' mode to append
         writer = csv.writer(file, delimiter=';')
-        writer.writerow([student.id, student.first_name, student.last_name, student.ph, student.email])
+        writer.writerow([student.id, student.last_name, student.first_name, student.ph, student.email])
 
 
 def update_Cinfo(courses):
@@ -91,74 +91,81 @@ def update_Cinfo(courses):
         writer = csv.writer(file, delimiter = ';')
         writer.writerow([courses.course_name, courses.semester,courses.course_id])
 
+def add_grade_info(student):
+     with open('grades.csv', mode='a', newline='') as file:  # Use 'a' mode to append
+         writer = csv.writer(file, delimiter=';')
+         writer.writerow([student.id, student.last_name, student.first_name, student.c1,student.c2,student.c3,student.c4])
+
 def main():
-    students = []
-    with open('students.csv',mode = 'r')as file:
-        reader = csv.reader(file, delimiter=';')
-
-        for row in reader:
-            student_id = int(row[0])
-            last_name = row[1]
-            first_name = row[2]
-            ph = row[3]
-            email = row[4]
-
-            # create a instance of the student class
-            student = Students(student_id, last_name, first_name, ph,email)
-
-            students.append(student)
-    students.sort(key = lambda student : student.first_name)
-
-  
-    courses = []
-    with open('courses.csv', mode = 'r') as file:
-        reader = csv.reader(file, delimiter = ';')
-
-        for row in reader:
-            course_name = row[0]
-            semester = row[1]
-            course_id = row[2]
-
-            course = Courses(course_name, semester, course_id)
-            courses.append(course)
-    grades = []
-    with open('grades.csv', mode = 'r') as file:
-        reader = csv.reader(file,delimiter = ";")
-
-        for row in reader:
-            student_id = int(row[0])
-            last_name = row[1]
-            first_name = row[2]
-            if row[3] != 'na':
-                c1 = int(row[3])
-            else:
-                c1 = row[3]
-            if row[4] != 'na':
-                c2 = int(row[4])
-            else:
-                c2 = row[4]
-            if row[5] != 'na':
-                c3 = int(row[5])
-            else:
-                c3 = row[5]
-            if row[6] != 'na':
-                c4 = int(row[6])
-            else:
-                c4 = row[6]
-
-
-            grade = Grades(student_id,last_name,first_name, c1,c2,c3,c4)
-            grades.append(grade)
-
     while(True):
+
+        students = []
+        with open('students.csv', mode='r') as file:
+            reader = csv.reader(file, delimiter=';')
+
+            for row in reader:
+                student_id = int(row[0])
+                last_name = row[1]
+                first_name = row[2]
+                ph = row[3]
+                email = row[4]
+
+                # create a instance of the student class
+                student = Students(student_id, last_name, first_name, ph, email)
+
+                students.append(student)
+
+        courses = []
+        with open('courses.csv', mode='r') as file:
+            reader = csv.reader(file, delimiter=';')
+
+            for row in reader:
+                course_name = row[0]
+                semester = row[1]
+                course_id = row[2]
+
+                course = Courses(course_name, semester, course_id)
+                courses.append(course)
+        grades = []
+        with open('grades.csv', mode='r') as file:
+            reader = csv.reader(file, delimiter=";")
+
+            for row in reader:
+                student_id = int(row[0])
+                last_name = row[1]
+                first_name = row[2]
+                if row[3] != 'na':
+                    c1 = int(row[3])
+                else:
+                    c1 = row[3]
+                if row[4] != 'na':
+                    c2 = int(row[4])
+                else:
+                    c2 = row[4]
+                if row[5] != 'na':
+                    c3 = int(row[5])
+                else:
+                    c3 = row[5]
+                if row[6] != 'na':
+                    c4 = int(row[6])
+                else:
+                    c4 = row[6]
+
+                grade = Grades(student_id, last_name, first_name, c1, c2, c3, c4)
+                grades.append(grade)
+
+
+
+
+
         print()
-        enter = input ( "View : (S)Student info (C)Courses Info (G)Grades (A)Add (E)Exit : ")
+        enter = input ( "\033[31mView : (S)Student info (C)Courses Info (G)Grades (A)Add (E)Exit : \033[0m")
         if enter.lower() == 's':
             print()
-            enter = input ("Student : (U)Update (L)List (S)Search (E)Exit to Main Menu : ")
+            enter = input ("\033[31mStudent : (U)Update (L)List (S)Search (E)Exit to Main Menu : \033[0m")
             if enter.lower() == 'l':
                 print()
-                enter = input("List : (U)Unordered (O)Ordered (R)Reversed (E)Exit to Main Menu : ")
+                enter = input("\033[31mList : (U)Unordered (O)Ordered (R)Reversed (E)Exit to Main Menu : \033[0m")
                 if enter.lower() == 'u':
                     Stu_order = Students(None,None,None,None,None)
                     Stu_order.print_list(students,False,False)
@@ -172,7 +179,7 @@ def main():
                     pass
                 continue
             elif enter.lower() == 'u':
-                enter_id = int(input("Enter student id: "))
+                enter_id = int(input("\033[33mEnter student id: \033[0m"))
                 student_found = False
 
                 for student in students:
@@ -181,34 +188,34 @@ def main():
                         print()
                         print(student)
                         print()
-                        enter = input("Update: (L)Last Name (F)First Name (P)Phone Number (E)Email: ")
+                        enter = input("\033[31mUpdate: (L)Last Name (F)First Name (P)Phone Number (E)Email: \033[0m")
 
                         if enter.lower() == 'l':
-                            enter = input("Enter new last name: ")
+                            enter = input("\033[33mEnter new last name: \033[0m")
                             student.last_name = enter
                         elif enter.lower() == 'f':
-                            enter = input("Enter new first name: ")
+                            enter = input("\033[33mEnter new first name: \033[0m")
                             student.first_name = enter
                         elif enter.lower() == 'p':
-                            enter = input("Enter new phone number: ")
+                            enter = input("\033[33mEnter new phone number: \033[0m")
                             student.ph = enter
                         elif enter.lower() == 'e':
-                            enter = input("Enter new email address: ")
+                            enter = input("\033[33mEnter new email address: \033[0m")
                             student.email = enter
                         update_Sinfo(students)
                         continue
             elif enter.lower() == 's':
                 print()
-                enter = input ("Search : (L)Last Name (P)Phone number (E) Exit to Main Menu : ")
+                enter = input ("\033[31mSearch : (L)Last Name (P)Phone number (E) Exit to Main Menu : \033[0m")
                 if enter.lower() == 'l':
                     #search for student from lastname
-                    enter = input("Enter last name : ")
+                    enter = input("\033[33mEnter last name : \033[0m")
                     enter = enter.upper();
                     SN_name = Students(None, enter, None,None,None)
                     SN_name.search(students)
                 elif enter.lower() == 'p':
                     #search for student from phone number
-                    enter = input("enter phone number : ")
+                    enter = input("\033[33menter phone number : \033[0m")
                     SN_ph = Students(None, None,None,enter,None)
                     SN_ph.search(students)
 
@@ -218,42 +225,42 @@ def main():
 
         elif enter.lower() == 'c':
             print()
-            enter = input ("Course : (L)List (S)Search (E)Exit to Main Menu : ")
+            enter = input ("\033[31mCourse : (L)List (S)Search (E)Exit to Main Menu : \033[0m")
             if enter.lower() == 'l':
                 print()
-                enter = input("List : (U)Unordered (O)Ordered (R)Reversed (E)Exit to Main Menu : ")
+                enter = input("\033[31mList : (U)Unordered (O)Ordered (R)Reversed (E)Exit to Main Menu : \033[0m")
                 if enter.lower() == 'u':
                     Stu_order = Courses(None,None,None)
                     Stu_order.print_list(courses,False,False)
                 elif enter.lower() == 'o':
-                    Stu_order = Students(None,None,None)
+                    Stu_order = Courses(None,None,None)
                     Stu_order.print_list(courses,True,False)
                 elif enter.lower() == 'r':
-                    Stu_order = Students(None,None,None)
+                    Stu_order = Courses(None,None,None)
                     Stu_order.print_list(courses,False,True)
                 elif enter.lower() == 'e':
                     pass
                 continue
             elif enter.lower() == 's':
                 print()
-                enter = input ("Search : (N)Name (C)Code (S)Semester (E) Exit to Main Menu : ")
+                enter = input ("\033[31mSearch : (N)Name (C)Code (S)Semester (E) Exit to Main Menu : \033[0m")
                 if enter.lower() == 'n':
                     #search for course name
                     print()
-                    enter = input("Enter course name : ")
+                    enter = input("\033[33mEnter course name : \033[0m")
                     enter = enter.upper()
                     S_name = Courses(enter, None, None)
                     S_name.search(courses)
                 elif enter.lower() == 'c':
                     # search for course code
                     print()
-                    enter = input("Enter course code : ")
+                    enter = input("\033[33mEnter course code : \033[0m")
                     S_id = Courses(None, None, enter)
                     S_id.search(courses)
                 elif enter.lower() == 's':
                     # output for semester
                     print()
-                    enter = input("Enter semester : ")
+                    enter = input("\033[33mEnter semester : \033[0m")
                     new_list = []
                     # add to new list
                     for i in courses:
@@ -266,11 +273,20 @@ def main():
                 continue
         elif enter.lower() == 'a':
             print()
-            l_name, c_code = input ("Enter last name and course code : ").split()
+            gg_grade1 = []
+            l_name, c_code = input ("\033[33mEnter last name and course code : \033[0m").split()
+            for course in courses:
+                enter = input(f"\033[33mEnter grades for {course.course_name} : \033[0m")
+                if not enter:
+                    gg_grade1.append('na')
+                else:
+                    gg_grade1.append(enter)
             new_student = Students(99, l_name, 'xyz', 1234, '@@@')
             new_course = Courses(c_code, 'fall', 1234)
+            new_grade = Grades(99,l_name,'xyz',gg_grade1[0],gg_grade1[1],gg_grade1[2],gg_grade1[3])
             add_student_info(new_student)
             update_Cinfo(new_course)
+            add_grade_info(new_grade)
             continue
         elif enter.lower() == 'g':
 
@@ -281,12 +297,12 @@ def main():
             for i in courses:
                 cg_list.append(i.course_name)
             print()
-            enter = input("Grades : (O)Stu Course & Grades (C)Stu Avg (CA)C+Term (AC)Avg Course Grades : ")
+            enter = input("\033[31mGrades : (O)Stu Course & Grades (C)Stu Avg (CA)C+Term (AC)Avg Course Grades : \033[0m")
             #output list of all courses taken by a student
 
             if enter.lower() == 'o':
                 print()
-                enter = input("Enter last name : ")
+                enter = input("\033[32mEnter last name : \033[0m")
                 avg = 0
                 for grade in grades:
                     if grade.last_name.lower() == enter.lower():
@@ -298,14 +314,14 @@ def main():
                             new_list.append((cg_list[2], grade.c3))
                         if grade.c4 != 'na':
                             new_list.append((cg_list[3], grade.c4))
-                    print(f"{grade.first_name},{grade.last_name}, {new_list}")
+                    print(f"\033[33m{grade.first_name},{grade.last_name}, {new_list}\033[0m")
                     avg = 0
                     new_list.clear()
 
                 ##########################################################
             elif enter.lower() == 'c':#average
                 print()
-                enter = input("Enter last name : ")
+                enter = input("\033[32mEnter last name : \033[0m")
                 avg = 0
                 for grade in grades:
                     if grade.last_name.lower() == enter.lower():
@@ -321,8 +337,8 @@ def main():
                         if grade.c4 != 'na':
                             new_list.append(0)
                             avg += grade.c4
-
-                    print(f"{grade.first_name},{grade.last_name} average = {avg/len(new_list)}")
+                    if len(new_list) != 0:
+                        print(f"\033[34m{grade.first_name},{grade.last_name} average = {avg/len(new_list)}\033[0m")
                     avg = 0
                     new_list.clear()
 
@@ -332,8 +348,8 @@ def main():
 
                 semester1 = ['winter','fall','spring']
                 print()
-                enter = input("Enter student's last Name : ")
-                enter_1 = input("Enter course term : ")
+                enter = input("\033[33mEnter student's last Name : \033[0m")
+                enter_1 = input("\033[33mEnter course term : \033[0m")
 
                 for grade in grades:
                     if grade.last_name.lower() == enter.lower():
@@ -360,12 +376,12 @@ def main():
                             count +=1
                     if count != 0:
                         print()
-                        print(f"{i.first_name},{i.last_name} {enter_1} average = {avg / count}")
+                        print(f"\033[34m{i.first_name},{i.last_name} {enter_1} average = {avg / count}\033[0m")
 
                 pass
             elif enter.lower() == 'ac':
                 print()
-                enter = input("Enter the course name : ")
+                enter = input("\033[33mEnter the course name : \033[0m")
                 list_course = []
                 list_fall = []
                 avg = 0
@@ -394,16 +410,16 @@ def main():
                     avg = avg + i
                 print()
                 if count1 == 0:
-                    print("no grades found")
+                    print("\033[34mno grades found")
                 else:
 
-                    print(f"the average grade for {enter} is {avg/count1}")
+                    print(f"\033[34mthe average grade for {enter} is {avg/count1}\033[0m")
 
         elif enter.lower() == 'e':
             sys.exit(0)
         else:
             print()
-            print("Invalid input")
+            print("\033[34mInvalid input\033[0m")
             continue
 
 if __name__ == "__main__":
