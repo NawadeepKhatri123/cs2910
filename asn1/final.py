@@ -75,6 +75,13 @@ class Grades:
         self.c3 = c3
         self.c4 = c4
 
+
+def update_Ginfo(grades):
+     with open('grades.csv',mode = 'w', newline='')as file:
+         writer = csv.writer(file, delimiter = ';')
+         for grade in grades:
+             writer.writerow([grade.id, grade.last_name, grade.first_name,grade.c1,grade.c2,grade.c3,grade.c4])
+
 def update_Sinfo(students):
     with open('students.csv',mode = 'w', newline='')as file:
         writer = csv.writer(file, delimiter = ';')
@@ -193,9 +200,17 @@ def main():
                         if enter.lower() == 'l':
                             enter = input("\033[33mEnter new last name: \033[0m")
                             student.last_name = enter
+                            for grade in grades:
+                                if grade.id == student_id:
+                                    grade.last_name = enter
+
                         elif enter.lower() == 'f':
                             enter = input("\033[33mEnter new first name: \033[0m")
-                            student.first_name = enter
+                            student.last_name = enter
+                            for grade in grades:
+                                if grade.id == student_id:
+                                    grade.last_name = enter
+
                         elif enter.lower() == 'p':
                             enter = input("\033[33mEnter new phone number: \033[0m")
                             student.ph = enter
@@ -203,6 +218,7 @@ def main():
                             enter = input("\033[33mEnter new email address: \033[0m")
                             student.email = enter
                         update_Sinfo(students)
+                        update_Ginfo(grades)
                         continue
             elif enter.lower() == 's':
                 print()
